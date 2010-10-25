@@ -1,0 +1,12 @@
+Name:                alphabeta
+Version:             0.1
+Description:         Tic-Tac-Toe game.
+License:             BSD3
+license-file:        LICENSE
+Author:              Graham Lowe
+Maintainer:          graham.lowe@gmail.com
+Build-Type:          Simple
+Cabal-Version:       >=1.8
+Executable alphabeta
+  Main-is:           Main.hs
+  Build-Depends:     base >= 4.2.0.1 && < 5, list-extras >= 0.4.0.1
