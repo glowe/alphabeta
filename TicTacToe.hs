@@ -32,35 +32,62 @@ prettyBoard (Board (tl, tc, tr, ml, mc, mr, bl, bc, br)) =
 
 type Square = Int
 
-
 play :: Board -> Square -> Value -> Maybe Board
 play (Board (Nothing, tc, tr,
-                  ml, mc, mr,
-                  bl, bc, br)) 1 X = Just $ Board (Just X, tc, tr, ml, mc, mr, bl, bc, br)
+             ml, mc, mr,
+             bl, bc, br)) 1 X = Just $ Board (Just X, tc, tr, ml, mc, mr, bl, bc, br)
 play (Board (Nothing, tc, tr,
-                  ml, mc, mr,
-                  bl, bc, br)) 1 O = Just $ Board (Just O, tc, tr, ml, mc, mr, bl, bc, br)
+             ml, mc, mr,
+             bl, bc, br)) 1 O = Just $ Board (Just O, tc, tr, ml, mc, mr, bl, bc, br)
 play (Board (tl, Nothing, tr,
-             ml,      mc, mr,
-             bl,      bc, br)) 2 X = Just $ Board (tl, Just X, tr, ml, mc, mr, bl, bc, br)
+             ml, mc, mr,
+             bl, bc, br)) 2 X = Just $ Board (tl, Just X, tr, ml, mc, mr, bl, bc, br)
 play (Board (tl, Nothing, tr,
-             ml,      mc, mr,
-             bl,      bc, br)) 2 O = Just $ Board (tl, Just O, tr, ml, mc, mr, bl, bc, br)
-play (Board (tl, tc, Nothing, ml, mc, mr, bl, bc, br)) 3 X = Just $ Board (tl, tc, Just X, ml, mc, mr, bl, bc, br)
-play (Board (tl, tc, Nothing, ml, mc, mr, bl, bc, br)) 3 O = Just $ Board (tl, tc, Just O, ml, mc, mr, bl, bc, br)
-play (Board (tl, tc, tr, Nothing, mc, mr, bl, bc, br)) 4 X = Just $ Board (tl, tc, tr, Just X, mc, mr, bl, bc, br)
-play (Board (tl, tc, tr, Nothing, mc, mr, bl, bc, br)) 4 O = Just $ Board (tl, tc, tr, Just O, mc, mr, bl, bc, br)
-play (Board (tl, tc, tr, ml, Nothing, mr, bl, bc, br)) 5 X = Just $ Board (tl, tc, tr, ml, Just X, mr, bl, bc, br)
-play (Board (tl, tc, tr, ml, Nothing, mr, bl, bc, br)) 5 O = Just $ Board (tl, tc, tr, ml, Just O, mr, bl, bc, br)
-play (Board (tl, tc, tr, ml, mc, Nothing, bl, bc, br)) 6 X = Just $ Board (tl, tc, tr, ml, mc, Just X, bl, bc, br)
-play (Board (tl, tc, tr, ml, mc, Nothing, bl, bc, br)) 6 O = Just $ Board (tl, tc, tr, ml, mc, Just O, bl, bc, br)
-play (Board (tl, tc, tr, ml, mc, mr, Nothing, bc, br)) 7 X = Just $ Board (tl, tc, tr, ml, mc, mr, Just X, bc, br)
-play (Board (tl, tc, tr, ml, mc, mr, Nothing, bc, br)) 7 O = Just $ Board (tl, tc, tr, ml, mc, mr, Just O, bc, br)
-play (Board (tl, tc, tr, ml, mc, mr, bl, Nothing, br)) 8 X = Just $ Board (tl, tc, tr, ml, mc, mr, bl, Just X, br)
-play (Board (tl, tc, tr, ml, mc, mr, bl, Nothing, br)) 8 O = Just $ Board (tl, tc, tr, ml, mc, mr, bl, Just O, br)
-play (Board (tl, tc, tr, ml, mc, mr, bl, bc, Nothing)) 9 X = Just $ Board (tl, tc, tr, ml, mc, mr, bl, bc, Just X)
-play (Board (tl, tc, tr, ml, mc, mr, bl, bc, Nothing)) 9 O = Just $ Board (tl, tc, tr, ml, mc, mr, bl, bc, Just O)
-play board                                             _ _ = Nothing -- playing in occupied square
+             ml, mc, mr,
+             bl, bc, br)) 2 O = Just $ Board (tl, Just O, tr, ml, mc, mr, bl, bc, br)
+play (Board (tl, tc, Nothing,
+             ml, mc, mr,
+             bl, bc, br)) 3 X = Just $ Board (tl, tc, Just X, ml, mc, mr, bl, bc, br)
+play (Board (tl, tc, Nothing,
+             ml, mc, mr,
+             bl, bc, br)) 3 O = Just $ Board (tl, tc, Just O, ml, mc, mr, bl, bc, br)
+play (Board (tl, tc, tr,
+             Nothing, mc, mr,
+             bl, bc, br)) 4 X = Just $ Board (tl, tc, tr, Just X, mc, mr, bl, bc, br)
+play (Board (tl, tc, tr,
+             Nothing, mc, mr,
+             bl, bc, br)) 4 O = Just $ Board (tl, tc, tr, Just O, mc, mr, bl, bc, br)
+play (Board (tl, tc, tr,
+             ml, Nothing, mr,
+             bl, bc, br)) 5 X = Just $ Board (tl, tc, tr, ml, Just X, mr, bl, bc, br)
+play (Board (tl, tc, tr,
+             ml, Nothing, mr,
+             bl, bc, br)) 5 O = Just $ Board (tl, tc, tr, ml, Just O, mr, bl, bc, br)
+play (Board (tl, tc, tr,
+             ml, mc, Nothing,
+             bl, bc, br)) 6 X = Just $ Board (tl, tc, tr, ml, mc, Just X, bl, bc, br)
+play (Board (tl, tc, tr,
+             ml, mc, Nothing,
+             bl, bc, br)) 6 O = Just $ Board (tl, tc, tr, ml, mc, Just O, bl, bc, br)
+play (Board (tl, tc, tr,
+             ml, mc, mr,
+             Nothing, bc, br)) 7 X = Just $ Board (tl, tc, tr, ml, mc, mr, Just X, bc, br)
+play (Board (tl, tc, tr,
+             ml, mc, mr,
+             Nothing, bc, br)) 7 O = Just $ Board (tl, tc, tr, ml, mc, mr, Just O, bc, br)
+play (Board (tl, tc, tr,
+             ml, mc, mr,
+             bl, Nothing, br)) 8 X = Just $ Board (tl, tc, tr, ml, mc, mr, bl, Just X, br)
+play (Board (tl, tc, tr,
+             ml, mc, mr,
+             bl, Nothing, br)) 8 O = Just $ Board (tl, tc, tr, ml, mc, mr, bl, Just O, br)
+play (Board (tl, tc, tr,
+             ml, mc, mr,
+             bl, bc, Nothing)) 9 X = Just $ Board (tl, tc, tr, ml, mc, mr, bl, bc, Just X)
+play (Board (tl, tc, tr,
+             ml, mc, mr,
+             bl, bc, Nothing)) 9 O = Just $ Board (tl, tc, tr, ml, mc, mr, bl, bc, Just O)
+play board _ _ = Nothing -- playing in occupied square
 
 getWinner :: Board -> Maybe Value
 getWinner (Board (Just X, Just X, Just X,
