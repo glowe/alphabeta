@@ -91,54 +91,54 @@ play board _ _ = Nothing -- playing in occupied square
 
 getWinner :: Board -> Maybe Value
 getWinner (Board (Just X, Just X, Just X,
-                       _,      _,      _,
-                       _,      _,      _)) = Just X
+                  _, _, _,
+                  _, _, _)) = Just X
 getWinner (Board (Just O, Just O, Just O,
-                       _,      _,      _,
-                       _,      _,      _)) = Just O
-getWinner (Board (     _,      _,      _,
+                  _, _, _,
+                  _, _, _)) = Just O
+getWinner (Board (_, _, _,
                   Just X, Just X, Just X,
-                       _,      _,      _)) = Just X
-getWinner (Board (     _,      _,      _,
+                  _, _, _)) = Just X
+getWinner (Board (_, _, _,
                   Just O, Just O, Just O,
-                       _,      _,      _)) = Just O
-getWinner (Board (     _,      _,      _,
-                       _,      _,      _,
+                  _, _, _)) = Just O
+getWinner (Board (_, _, _,
+                  _, _, _,
                   Just X, Just X, Just X)) = Just X
-getWinner (Board (     _,      _,      _,
-                       _,      _,      _,
+getWinner (Board (_, _, _,
+                  _, _, _,
                   Just O, Just O, Just O)) = Just O
-getWinner (Board (Just X,      _,      _,
-                  Just X,      _,      _,
-                  Just X,      _,      _)) = Just X
-getWinner (Board (Just O,      _,      _,
-                  Just O,      _,      _,
-                  Just O,      _,      _)) = Just O
-getWinner (Board (     _, Just X,      _,
-                       _, Just X,      _,
-                       _, Just X,      _)) = Just X
-getWinner (Board (     _, Just O,      _,
-                       _, Just O,      _,
-                       _, Just O,      _)) = Just O
-getWinner (Board (     _,      _, Just X,
-                       _,      _, Just X,
-                       _,      _, Just X)) = Just X
-getWinner (Board (     _,      _, Just O,
-                       _,      _, Just O,
-                       _,      _, Just O)) = Just O
-getWinner (Board (Just X,      _,      _,
-                       _, Just X,      _,
-                       _,      _, Just X)) = Just X
-getWinner (Board (Just O,      _,      _,
-                       _, Just O,      _,
-                       _,      _, Just O)) = Just O
-getWinner (Board (     _,      _, Just X,
-                       _, Just X,      _,
-                  Just X,      _,      _)) = Just X
-getWinner (Board (     _,      _, Just O,
-                       _, Just O,      _,
-                  Just O,      _,      _)) = Just O
-getWinner _                                = Nothing
+getWinner (Board (Just X, _, _,
+                  Just X, _, _,
+                  Just X, _, _)) = Just X
+getWinner (Board (Just O, _, _,
+                  Just O, _, _,
+                  Just O, _, _)) = Just O
+getWinner (Board (_, Just X, _,
+                  _, Just X, _,
+                  _, Just X, _)) = Just X
+getWinner (Board (_, Just O, _,
+                  _, Just O, _,
+                  _, Just O, _)) = Just O
+getWinner (Board (_, _, Just X,
+                  _, _, Just X,
+                  _, _, Just X)) = Just X
+getWinner (Board (_, _, Just O,
+                  _, _, Just O,
+                  _, _, Just O)) = Just O
+getWinner (Board (Just X, _, _,
+                  _, Just X, _,
+                  _, _, Just X)) = Just X
+getWinner (Board (Just O, _, _,
+                  _, Just O, _,
+                  _, _, Just O)) = Just O
+getWinner (Board (_, _, Just X,
+                  _, Just X, _,
+                  Just X, _, _)) = Just X
+getWinner (Board (_, _, Just O,
+                  _, Just O, _,
+                  Just O, _, _)) = Just O
+getWinner _ = Nothing
 
 isWinningBoard :: Board -> Bool
 isWinningBoard board =
@@ -155,15 +155,33 @@ isEmpty Nothing = True
 isEmpty _     = False
 
 square :: Board -> Square -> Maybe Value
-square (Board (tl, _, _, _, _, _, _, _, _)) 1 = tl
-square (Board (_, tc, _, _, _, _, _, _, _)) 2 = tc
-square (Board (_, _, tr, _, _, _, _, _, _)) 3 = tr
-square (Board (_, _, _, ml, _, _, _, _, _)) 4 = ml
-square (Board (_, _, _, _, mc, _, _, _, _)) 5 = mc
-square (Board (_, _, _, _, _, mr, _, _, _)) 6 = mr
-square (Board (_, _, _, _, _, _, bl, _, _)) 7 = bl
-square (Board (_, _, _, _, _, _, _, bc, _)) 8 = bc
-square (Board (_, _, _, _, _, _, _, _, br)) 9 = br
+square (Board (tl, _, _,
+               _, _, _,
+               _, _, _)) 1 = tl
+square (Board (_, tc, _,
+               _, _, _,
+               _, _, _)) 2 = tc
+square (Board (_, _, tr,
+               _, _, _,
+               _, _, _)) 3 = tr
+square (Board (_, _, _,
+               ml, _, _,
+               _, _, _)) 4 = ml
+square (Board (_, _, _,
+               _, mc, _,
+               _, _, _)) 5 = mc
+square (Board (_, _, _,
+               _, _, mr,
+               _, _, _)) 6 = mr
+square (Board (_, _, _,
+               _, _, _,
+               bl, _, _)) 7 = bl
+square (Board (_, _, _,
+               _, _, _,
+               _, bc, _)) 8 = bc
+square (Board (_, _, _,
+               _, _, _,
+               _, _, br)) 9 = br
 
 allSquares :: [Square]
 allSquares = [1 .. 9]
@@ -174,15 +192,15 @@ emptySquares board = [s | s <- allSquares, isEmpty $ square board s]
 whoseTurn :: Board -> Value
 whoseTurn board
     | odd . length $ emptySquares board = X
-    | otherwise                         = O
+    | otherwise = O
 
 type Move = (Square, Value)
 
 instance MiniMax Board Move where
-    isTerminal board                 = isEndGame board
+    isTerminal board = isEndGame board
     utility board | getWinner board == Just X = -1
                   | getWinner board == Just O = 1
-                  | otherwise                 = 0
+                  | otherwise = 0
     successors board =
         map playMove $ emptySquares board
         where playMove square = ((square, move), (fromJust (play board square move)))

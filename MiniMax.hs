@@ -15,9 +15,9 @@ decision state = fst $ argmax (minValue . snd) (successors state)
 minValue :: (MiniMax s a, Num v, Ord v) => s -> v
 minValue state
     | isTerminal state = utility state
-    | otherwise        = minimum $ map (maxValue . snd) (successors state)
+    | otherwise = minimum $ map (maxValue . snd) (successors state)
 
 maxValue :: (MiniMax s a, Num v, Ord v) => s -> v
 maxValue state
     | isTerminal state = utility state
-    | otherwise        = maximum $ map (minValue . snd) (successors state)
+    | otherwise = maximum $ map (minValue . snd) (successors state)

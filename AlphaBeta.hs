@@ -21,7 +21,7 @@ decision = fst . argmax minValueStart . successors
 
 xValue nextValue initialV state alpha beta
        | isTerminal state = utility state
-       | otherwise        = nextValue successors' initialV alpha beta
+       | otherwise = nextValue successors' initialV alpha beta
        where successors' = (map snd (successors state))
 
 minValue :: (MiniMax s a, Num v, Ord v) => s -> v -> v -> v
@@ -34,14 +34,13 @@ minValue' :: (MiniMax s a, Num v, Ord v) => [s] -> v -> v -> v -> v
 minValue' [] v alpha beta = v
 minValue' (s:xs) v alpha beta
     | v' <= alpha = v'  -- Prune
-    | otherwise  = minValue' xs v' alpha (min beta v')
+    | otherwise = minValue' xs v' alpha (min beta v')
     where v' = min v $ maxValue s alpha beta
-
 
 maxValue' :: (MiniMax s a, Num v, Ord v) => [s] -> v -> v -> v -> v
 maxValue' [] v alpha beta = v
 maxValue' (s:xs) v alpha beta
     | v' >= beta = v' -- Prune
-    | otherwise  = maxValue' xs v' (max alpha v') beta
+    | otherwise = maxValue' xs v' (max alpha v') beta
     where v' = max v $ minValue s alpha beta
 
